@@ -1,32 +1,32 @@
 var playState = {
-  player: null,
-  mob: null,
-  layer: null,
-  create: function() {
-    var self = this;
+    player: null,
+    mob: null,
+    layer: null,
+    create: function() {
+        var self = this;
 
-    var map = game.add.tilemap('level');
-    map.addTilesetImage('world', 'tiles');
+        var map = game.add.tilemap('level');
+        map.addTilesetImage('world', 'tiles');
 
-    map.setCollision([217, 218, 219, 221]);
-    self.layer = map.createLayer('Tile Layer 1');
+        map.setCollision([217, 218, 219, 221]);
+        self.layer = map.createLayer('Tile Layer 1');
 
-    self.player = new Player(300, 200);
-    game.add.existing(self.player);
-    game.physics.enable(self.player, Phaser.Physics.ARCADE);
+        self.player = new Player(300, 200);
+        game.add.existing(self.player);
+        game.physics.enable(self.player, Phaser.Physics.ARCADE);
 
-    self.mob = game.add.group();
-    self.mob.add(Enemy(100, 100));
-    self.mob.add(Enemy(200, 100));
-    self.mob.add(Enemy(100, 200));
-    self.mob.add(Enemy(200, 200));
-    self.mob.add(Enemy(300, 300));
-    self.mob.add(Enemy(400, 200));
-    self.mob.forEach(function(enemy, index){
-      game.physics.enable(enemy, Phaser.Physics.ARCADE);
-      enemy.body.immovable = true;
-    });
-    game.input.activePointer.capture = true;
+        self.mob = game.add.group();
+        self.mob.add(Enemy(100, 100));
+        self.mob.add(Enemy(200, 100));
+        self.mob.add(Enemy(100, 200));
+        self.mob.add(Enemy(200, 200));
+        self.mob.add(Enemy(300, 300));
+        self.mob.add(Enemy(400, 200));
+        self.mob.forEach(function(enemy, index){
+            game.physics.enable(enemy, Phaser.Physics.ARCADE);
+            enemy.body.immovable = true;
+        });
+        game.input.activePointer.capture = true;
   },
   update: function() {
     var self = this;
