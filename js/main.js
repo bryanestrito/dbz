@@ -13,32 +13,88 @@ var sample = {
         y = game.world.centerY;
 
         gokussgod = game.add.sprite(x - 50, y, 'gokussgod');
-        gokussgod.frame = 3;
+        gokussgod.anchor.setTo(0.5, 1);
+        gokussgod.frame = 1;
+
+        gokussgod.animations.add('charge', [11, 12, 13]);
 
         game.add.existing(gokussgod);
 
         // vegetassgod = game.add.sprite(x + 50, y, 'vegetassgod', 2);
-
-        // gokussgod.animations.add('charge', [11, 12, 13]);
-
         // vegetassgod.animations.add('charge', [11, 12, 13]);
         // vegetassgod.animations.play('charge', 15, true);
 
-        // gokussgod.anchor.setTo(0.5);
         // vegetassgod.anchor.setTo(0.5);
         // vegetassgod.scale.setTo(-1, 1);
+
+        //  Register the keys.
+        this.up = game.input.keyboard.addKey(Phaser.Keyboard.W);
+        this.down = game.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.left = game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.right = game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.melee = game.input.keyboard.addKey(Phaser.Keyboard.I);
+        this.charge = game.input.keyboard.addKey(Phaser.Keyboard.O);
+
+        // game.add.tween(gokussgod).to({ y: 250 }, 1000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
     },
     update: function () {
-        // if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-        //     gokussgod.x -= 4;
-        // } else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-        //     gokussgod.x += 4;
+        if (this.charge.isDown) {
+            gokussgod.animations.play('charge', 15, true);
+        } else if (this.melee.isDown) {
+            meleeFrameStart = 16;
+            meleeFrameEnd = 23;
+
+            if (this.melee.upDuration(1000)) {
+                if (gokussgod.frame < meleeFrameEnd) {
+                    gokussgod.frame = gokussgod.frame++;
+                } else {
+                    gokussgod.frame = meleeFrameStart;
+                }
+            } else {
+                gokussgod.frame = meleeFrameStart;
+            }
+        } else {
+            gokussgod.frame = 1;
+        }
+
+        // if (this.melee.isDown) {
+        //     meleeFrameStart = 16;
+        //     meleeFrameEnd = 23;
+
+        //     if (this.melee.downDuration(2000)) {
+        //         console.log('melee');
+
+        //         if (gokussgod.frame < meleeFrameEnd) {
+        //             gokussgod.frame = gokussgod.frame++;
+        //         } else {
+        //             gokussgod.frame = meleeFrameStart;
+        //         }
+        //     } else {
+        //         gokussgod.frame = meleeFrameStart;
+        //     }
+        // } else {
+        //     gokussgod.frame = 1;
         // }
 
-        // if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-        //     gokussgod.y -= 4;
-        // } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-        //     gokussgod.y += 4;
+
+        //     // reset frame
+        //     gokussgod.frame = 1;
+
+        //     if (this.up.isDown) {
+        //         gokussgod.frame = 1;
+        //         gokussgod.y -= 5;
+        //     } else if (this.down.isDown) {
+        //         gokussgod.frame = 2;
+        //         gokussgod.y += 5;
+        //     }
+
+        //     if (this.left.isDown) {
+        //         gokussgod.frame = 4;
+        //         gokussgod.x -= 5;
+        //     } else if (this.right.isDown) {
+        //         gokussgod.frame = 3;
+        //         gokussgod.x += 5;
+        //     }
         // }
 
         // if (game.input.keyboard.isDown(Phaser.Keyboard.U)) {
